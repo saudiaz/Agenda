@@ -4,14 +4,16 @@ using Agenda.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Agenda.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201105041535_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,38 +99,6 @@ namespace Agenda.Data.Migrations
                     b.HasKey("IDCompaniaTelefonica");
 
                     b.ToTable("CompaniaTelefonicas");
-                });
-
-            modelBuilder.Entity("Agenda.Models.Contacto", b =>
-                {
-                    b.Property<int>("IDContracto")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Apellidos")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IDCompaniaTelefonica")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Nombres")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumeroContacto")
-                        .HasColumnType("int");
-
-                    b.HasKey("IDContracto");
-
-                    b.HasIndex("IDCompaniaTelefonica")
-                        .IsUnique();
-
-                    b.HasIndex("Id");
-
-                    b.ToTable("Contactos");
                 });
 
             modelBuilder.Entity("Agenda.Models.Perfil", b =>
@@ -298,19 +268,6 @@ namespace Agenda.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Agenda.Models.Contacto", b =>
-                {
-                    b.HasOne("Agenda.Models.CompaniaTelefonica", "CompaniaTelefonica")
-                        .WithOne("Contacto")
-                        .HasForeignKey("Agenda.Models.Contacto", "IDCompaniaTelefonica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Agenda.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Contactos")
-                        .HasForeignKey("Id");
                 });
 
             modelBuilder.Entity("Agenda.Models.Perfil", b =>
